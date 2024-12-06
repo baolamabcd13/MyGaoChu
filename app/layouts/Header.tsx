@@ -1,23 +1,53 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ROUTES } from "@/app/lib/constants/routes";
+import { usePathname } from "next/navigation";
 
 const NavBar: React.FC = () => {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const [hoveredSubmenu, setHoveredSubmenu] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
 
-  // Add scroll event listener
-  React.useEffect(() => {
+  const isHomePage = pathname === "/";
+  const headerStyles = {
+    background: isHomePage ? "bg-white" : "bg-[--primary-green]",
+    text: isHomePage ? "text-[--primary-green]" : "text-white",
+  };
+
+  useLayoutEffect(() => {
+    setMounted(true);
+    setIsOpen(false);
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
 
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        buttonRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+        setActiveSubmenu(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const toggleMenu = () => {
@@ -29,26 +59,31 @@ const NavBar: React.FC = () => {
     setActiveSubmenu(activeSubmenu === menuName ? null : menuName);
   };
 
+  const menuClasses = `fixed inset-0 z-40 transition-all duration-300 
+    ${isScrolled ? "pt-[64px]" : "pt-[120px]"}
+    ${isOpen ? "animate-slideDown" : "animate-slideUp"}
+    ${!mounted || !isOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`;
+
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 bg-white shadow-md w-full transition-all duration-300 ${
-          isScrolled ? "h-[64px]" : "h-[120px]"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 
+          ${isScrolled ? "h-[64px]" : "h-[120px]"}
+          ${headerStyles.background}`}
       >
         <div
-          className={`container mx-auto flex items-center justify-between px-0 transition-all duration-300 ${
-            isScrolled ? "py-2" : "py-9"
-          }`}
+          className={`container mx-auto h-full flex items-center justify-between px-0 transition-all duration-300 
+            ${isScrolled ? "py-0" : "py-9"}`}
         >
-          <div className="flex items-center">
+          <div className="flex items-center h-full">
             <div
-              className="flex items-center cursor-pointer"
+              ref={buttonRef}
+              className="flex items-center h-full cursor-pointer"
               onClick={toggleMenu}
             >
               {isOpen ? (
                 <svg
-                  className="w-14 h-14 text-[--primary-green]"
+                  className={`w-14 h-14 ${headerStyles.text}`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -62,7 +97,7 @@ const NavBar: React.FC = () => {
                 </svg>
               ) : (
                 <svg
-                  className="w-14 h-14 text-[--primary-green]"
+                  className={`w-14 h-14 ${headerStyles.text}`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -75,13 +110,13 @@ const NavBar: React.FC = () => {
                   />
                 </svg>
               )}
-              <span className="text-[--primary-green] font-bold text-3xl ml-2">
+              <span className={`font-bold text-3xl ml-2 ${headerStyles.text}`}>
                 MENU
               </span>
             </div>
           </div>
-          <div className="logo absolute left-1/2 transform -translate-x-1/2 flex items-center h-full pb-2">
-            <Link href="">
+          <div className="logo absolute left-1/2 transform -translate-x-1/2 flex items-center h-full">
+            <Link href="" className="flex items-center">
               <Image
                 src="/images/logo.png"
                 alt="Logo"
@@ -91,10 +126,10 @@ const NavBar: React.FC = () => {
               />
             </Link>
           </div>
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center h-full space-x-8">
             <div className="cursor-pointer">
               <svg
-                className="w-11 h-11 text-black"
+                className={`w-11 h-11 ${headerStyles.text}`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -109,7 +144,7 @@ const NavBar: React.FC = () => {
             </div>
             <div className="cursor-pointer">
               <svg
-                className="w-11 h-11 text-black"
+                className={`w-11 h-11 ${headerStyles.text}`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -142,12 +177,9 @@ const NavBar: React.FC = () => {
       </header>
 
       {/* Menu overlay - positioned below header */}
-      <div
-        className={`fixed inset-0 z-40 transition-all duration-300 ${
-          isScrolled ? "pt-[64px]" : "pt-[120px]"
-        } ${isOpen ? "animate-slideDown" : "animate-slideUp"}`}
-      >
+      <div className={menuClasses}>
         <div
+          ref={menuRef}
           className={`w-[560px] h-[calc(100vh-120px)] bg-primary-green relative overflow-auto scrollbar ${
             isOpen ? "animate-fadeIn" : "animate-fadeOut"
           }`}
@@ -158,7 +190,7 @@ const NavBar: React.FC = () => {
             }`}
           >
             <li className="px-[30px] py-2 hover:bg-[rgba(255,255,255,0.3)] transition-colors duration-200">
-              <Link href="/vn/trang-chu.html">TRANG CHỦ</Link>
+              <Link href={ROUTES.HOME}>TRANG CHỦ</Link>
             </li>
 
             {/* VỀ VIFON */}
@@ -189,28 +221,28 @@ const NavBar: React.FC = () => {
                     onMouseEnter={() => setHoveredSubmenu("about")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
-                    <Link href="/gioi-thieu">Giới Thiệu</Link>
+                    <Link href={ROUTES.ABOUT.INTRODUCTION}>Giới Thiệu</Link>
                   </li>
                   <li
                     className="px-[45px] py-2 hover:text-[--submenu-hover] transition-all duration-200"
                     onMouseEnter={() => setHoveredSubmenu("about")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
-                    <Link href="/lich-su">Lịch Sử</Link>
+                    <Link href={ROUTES.ABOUT.HISTORY}>Lịch Sử</Link>
                   </li>
                   <li
                     className="px-[45px] py-2 hover:text-[--submenu-hover] transition-all duration-200"
                     onMouseEnter={() => setHoveredSubmenu("about")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
-                    <Link href="/thanh-tuu">Thành Tựu</Link>
+                    <Link href={ROUTES.ABOUT.ACHIEVEMENTS}>Thành Tựu</Link>
                   </li>
                   <li
                     className="px-[45px] py-2 hover:text-[--submenu-hover] transition-all duration-200"
                     onMouseEnter={() => setHoveredSubmenu("about")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
-                    <Link href="/cong-dong">Cộng Đồng</Link>
+                    <Link href={ROUTES.ABOUT.COMMUNITY}>Cộng Đồng</Link>
                   </li>
                 </ul>
               </div>
@@ -246,28 +278,28 @@ const NavBar: React.FC = () => {
                     onMouseEnter={() => setHoveredSubmenu("products")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
-                    <Link href="/san-pham/gao">Gạo</Link>
+                    <Link href={ROUTES.PRODUCTS.GAO}>Gạo</Link>
                   </li>
                   <li
                     className="px-[45px] py-2 hover:text-[--submenu-hover] transition-all duration-200"
                     onMouseEnter={() => setHoveredSubmenu("products")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
-                    <Link href="/san-pham/mi">Mì</Link>
+                    <Link href={ROUTES.PRODUCTS.MI}>Mì</Link>
                   </li>
                   <li
                     className="px-[45px] py-2 hover:text-[--submenu-hover] transition-all duration-200"
                     onMouseEnter={() => setHoveredSubmenu("products")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
-                    <Link href="/san-pham/gia-vi">Gia Vị</Link>
+                    <Link href={ROUTES.PRODUCTS.GIAVI}>Gia Vị</Link>
                   </li>
                   <li
                     className="px-[45px] py-2 hover:text-[--submenu-hover] transition-all duration-200"
                     onMouseEnter={() => setHoveredSubmenu("products")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
-                    <Link href="/san-pham/nhap-khau">Nhập Khẩu</Link>
+                    <Link href={ROUTES.PRODUCTS.NHAPKHAU}>Nhập Khẩu</Link>
                   </li>
                 </ul>
               </div>

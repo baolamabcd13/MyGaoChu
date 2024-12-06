@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { ROUTES } from "@/app/lib/constants/routes";
 
 const countries = [
   {
@@ -41,11 +42,11 @@ const Footer = () => {
 
       {/* Main Navigation */}
       <div className="text-xl font-extrabold flex flex-wrap justify-center text-center gap-x-4 mb-8">
-        <Link href="/ve-vifon" className="hover:underline">
+        <Link href={ROUTES.ABOUT.INTRODUCTION} className="hover:underline">
           VỀ VIFON
         </Link>
         <span>•</span>
-        <Link href="/san-pham" className="hover:underline">
+        <Link href={ROUTES.PRODUCTS.ROOT} className="hover:underline">
           SẢN PHẨM
         </Link>
         <span>•</span>

@@ -13,6 +13,7 @@ export default {
         baloo: ["var(--font-baloo)"],
       },
       colors: {
+        "theme-green": "#64ac58",
         "primary-green": "var(--primary-green)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
