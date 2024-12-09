@@ -1,7 +1,6 @@
 import React from "react";
 import Hero from "@/app/layouts/Hero";
 import Products from "./Products/Products";
-import Media from "./Media/Media";
 import Dishes from "./Dishes/Dishes";
 import Gallery from "./Gallery/Gallery";
 import Footer from "@/app/layouts/Footer";
@@ -11,7 +10,6 @@ const LandingPage = () => {
     <section className="flex flex-col w-full">
       <Hero />
       <Products />
-      <Media />
       <Dishes />
       <Gallery />
       <Footer />
