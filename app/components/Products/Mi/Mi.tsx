@@ -84,7 +84,6 @@ const noodleProducts = [
     link: "/products/mi/ca-ri-ga",
     category: CATEGORIES.PACKET,
   },
-  // Thêm các sản phẩm khác tương tự
 ];
 
 const sideIcons = [
@@ -184,7 +183,7 @@ const Mi = () => {
               <div
                 key={icon.id}
                 className={`w-[96px] h-[96px] relative cursor-pointer group flex items-center justify-center ${
-                  selectedCategory === icon.id ? "bg-gray-100" : ""
+                  selectedCategory === icon.id ? "bg-white" : ""
                 }`}
                 onClick={() => {
                   setSelectedCategory(

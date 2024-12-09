@@ -8,7 +8,7 @@ export const ROUTES = {
     COMMUNITY: "/about/community",
   },
   PRODUCTS: {
-    ROOT: "/products/gao",
+    ROOT: "/products/mi",
     NHAPKHAU: "/products/nhapkhau",
     GIAVI: "/products/giavi",
     MI: "/products/mi",

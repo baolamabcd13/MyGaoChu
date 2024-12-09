@@ -231,7 +231,7 @@ const sideIcons = [
   },
 ];
 
-const InstantNoodles = () => {
+const Gao = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
@@ -259,7 +259,7 @@ const InstantNoodles = () => {
               <div
                 key={icon.id}
                 className={`w-[96px] h-[96px] relative cursor-pointer group flex items-center justify-center ${
-                  selectedCategory === icon.id ? "bg-gray-100" : ""
+                  selectedCategory === icon.id ? "bg-white" : ""
                 }`}
                 onClick={() => {
                   setSelectedCategory(
@@ -349,4 +349,4 @@ const InstantNoodles = () => {
   );
 };
 
-export default InstantNoodles;
+export default Gao;

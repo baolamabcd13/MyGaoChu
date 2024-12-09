@@ -273,21 +273,21 @@ const NavBar: React.FC = () => {
                 }`}
               >
                 <ul className="text-1xl font-bold text-gray-700">
-                  <li
+                  {/* <li
                     className="px-[45px] py-2 hover:text-[--submenu-hover] transition-all duration-200"
                     onMouseEnter={() => setHoveredSubmenu("products")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
                     <Link href={ROUTES.PRODUCTS.GAO}>Gạo</Link>
-                  </li>
+                  </li> */}
                   <li
                     className="px-[45px] py-2 hover:text-[--submenu-hover] transition-all duration-200"
                     onMouseEnter={() => setHoveredSubmenu("products")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
-                    <Link href={ROUTES.PRODUCTS.MI}>Mì</Link>
+                    <Link href={ROUTES.PRODUCTS.MI}>Mì Gạo Chũ</Link>
                   </li>
-                  <li
+                  {/* <li
                     className="px-[45px] py-2 hover:text-[--submenu-hover] transition-all duration-200"
                     onMouseEnter={() => setHoveredSubmenu("products")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
@@ -300,14 +300,14 @@ const NavBar: React.FC = () => {
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
                     <Link href={ROUTES.PRODUCTS.NHAPKHAU}>Nhập Khẩu</Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </li>
 
-            <li className="px-[30px] py-2 hover:bg-[rgba(255,255,255,0.3)] transition-colors duration-200">
+            {/* <li className="px-[30px] py-2 hover:bg-[rgba(255,255,255,0.3)] transition-colors duration-200">
               <Link href="/cua-hang-vifonmart">CỬA HÀNG VIFONMART</Link>
-            </li>
+            </li> */}
 
             {/* TRUYỀN THÔNG & KHUYẾN MÃI */}
             <li>
@@ -346,7 +346,7 @@ const NavBar: React.FC = () => {
                   >
                     <Link href="/khuyen-mai">Khuyến Mãi</Link>
                   </li>
-                  <li
+                  {/* <li
                     className="px-[45px] py-2 hover:text-[--submenu-hover] transition-all duration-200"
                     onMouseEnter={() => setHoveredSubmenu("media")}
                     onMouseLeave={() => setHoveredSubmenu(null)}
@@ -359,13 +359,13 @@ const NavBar: React.FC = () => {
                     onMouseLeave={() => setHoveredSubmenu(null)}
                   >
                     <Link href="/them-gia-vi">Thêm Gia Vị Vào Cuộc Sống</Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </li>
 
             {/* BẾP VIFON */}
-            <li>
+            {/* <li>
               <div
                 className={`flex justify-between items-center px-[30px] py-2 transition-colors duration-200 cursor-pointer hover:bg-[rgba(255,255,255,0.3)] ${
                   hoveredSubmenu === "kitchen"
@@ -405,15 +405,15 @@ const NavBar: React.FC = () => {
                   </li>
                 </ul>
               </div>
-            </li>
+            </li> */}
 
             <li className="px-[30px] py-2 hover:bg-[rgba(255,255,255,0.3)] transition-colors duration-200">
               <Link href="/thu-vien-vifon">THƯ VIỆN VIFON</Link>
             </li>
 
-            <li className="px-[30px] py-2 hover:bg-[rgba(255,255,255,0.3)] transition-colors duration-200">
+            {/* <li className="px-[30px] py-2 hover:bg-[rgba(255,255,255,0.3)] transition-colors duration-200">
               <Link href="/nghe-nghiep">NGHỀ NGHIỆP</Link>
-            </li>
+            </li> */}
 
             <li className="px-[30px] py-2 hover:bg-[rgba(255,255,255,0.3)] transition-colors duration-200">
               <Link href="/an-toan-thuc-pham">AN TOÀN THỰC PHẨM</Link>
