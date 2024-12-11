@@ -420,7 +420,7 @@ const NavBar: React.FC = () => {
             </li>
 
             <li className="px-[30px] py-2 hover:bg-[rgba(255,255,255,0.3)] transition-colors duration-200">
-              <Link href="/lien-he">LIÊN HỆ</Link>
+              <Link href={ROUTES.CONTACT.INFO}>LIÊN HỆ</Link>
             </li>
             {/* Social media icons */}
             <div className="flex justify-center space-x-6 mt-12 pb-[30px]">

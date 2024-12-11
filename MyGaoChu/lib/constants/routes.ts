@@ -26,4 +26,7 @@ export const ROUTES = {
     POLICY: "/food-safety/policy",
     CERTIFICATION: "/food-safety/certification",
   },
+  CONTACT: {
+    INFO: "/contact-info",
+  },
 } as const;
